@@ -1,0 +1,43 @@
+easemob:
+  domain: "https://a1.easemob.com"
+  org_name: "1100180123178781"
+  app_name: "talk-it"
+  client_id: "YXA679ogAAAwEeimin2n4su4OQ"
+  client_secret: "YXA62f3hWV595-jG8RD0fNNyl24LetM"
+  token: "YWMt9MVl8AJ7EeiW5yuwLFwpNAAAAAAAAAAAAAAAAAAAAAHv2iAAADAR6KaKfafiy7g5AgMAAAFhMdCE0QBPGgDHcOYmZwVLvq8vo9Tt6Z9EAK-2l0plUF6pjTDzkMvAHw"
+  application: "efda2000-0030-11e8-a68a-7da7e2cbb839"
+  grant_type:
+    "client_credentials": "client_credentials"
+  url:
+    token: "token"
+    users: "users"
+    password: "password"
+    contacts: "contacts"
+    blocks: "blocks"
+    status: "status"
+    deactivate: "deactivate"
+    activate: "activate"
+    disconnect: "disconnect"
+    chatgroup: "chatgroup"
+gobelieve:
+  domain: "http://api.gobelieve.io"
+  app_id: "3337"
+  app_key: "j1EBgwJF8Y1vyZSTF8uYJghWfOMbsXGF"
+  app_secret: "t1CRc9UxCgFxf7gecWxYCyHwtSKMPwrD"
+  url:
+    auth: "auth"
+    grant: "grant"
+    user: "users"
+    groups: "groups"
+    members: "members"
+    messages: "messages"
+    system: "system"
+facebook:
+  domain: "https://graph.accountkit.com"
+  app_id: "163321000961501"
+  app_secret: "ca922af94ad1e98934a38c62556bab87"
+  client_token: "01c2523213d6d386544659ff6735dc15"
+  url:
+    version: "v1.2"
+    access_token: "access_token"
+    me: "me"
