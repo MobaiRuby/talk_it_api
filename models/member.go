@@ -1,9 +1,11 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/MobaiRuby/talk_it_api/db"
+	"github.com/henrylee2cn/faygo/ext/db/xorm"
 )
 
 type Member struct {
@@ -17,6 +19,10 @@ type Member struct {
 	Created    time.Time `xorm:"created" json:"created"`
 	Updated    time.Time `xorm:"updated" json:"updated"`
 	Deleted    time.Time `xorm:"deleted" json:"deleted"`
+}
+
+func init() {
+	xorm.MustDB().Sync(new(Member))
 }
 
 func Members() ([]*Member, error) {
@@ -38,4 +44,12 @@ func (m *Member) Remove() error {
 func (m *Member) Leave() error {
 	_, err := db.TalkITEngine.Native.Delete(m)
 	return err
+}
+
+func (m *Member) One() error {
+	has, err := db.TalkITEngine.Native.Get(m)
+	if !has || err != nil {
+		return fmt.Errorf("get friend info faild")
+	}
+	return nil
 }

@@ -3,6 +3,8 @@ package models
 import (
 	"time"
 
+	"fmt"
+
 	"github.com/MobaiRuby/talk_it_api/db"
 	"github.com/henrylee2cn/faygo/ext/db/xorm"
 )
@@ -38,4 +40,12 @@ func (u *User) Insert() (*User, error) {
 	}
 
 	return u, nil
+}
+
+func (u *User) Info() error {
+	has, err := db.TalkITEngine.Native.Get(u)
+	if !has || err != nil {
+		return fmt.Errorf("no user exsited")
+	}
+	return nil
 }

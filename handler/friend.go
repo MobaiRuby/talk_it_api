@@ -40,6 +40,39 @@ func (h *Base) Friends() faygo.HandlerFunc {
 	})
 }
 
+func (h *Base) Friend() faygo.HandlerFunc {
+	return faygo.HandlerFunc(func(ctx *faygo.Context) error {
+		cur_user_id, err := strconv.Atoi(ctx.Data(global.TALK_IT_HEADER_CURRENT_USER_ID).(string))
+		if cur_user_id == 0 || err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeUserIdError,
+				"msg":  "get current user failed",
+			})
+		}
+		f_id, err := pathId(ctx)
+		if err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeFriendError,
+				"msg":  err.Error(),
+			})
+		}
+
+		if friend, err := talk_it.Friend(f_id); err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeFriendError,
+				"msg":  err.Error(),
+			})
+		} else {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": 0,
+				"msg":  "",
+				"data": friend,
+			})
+		}
+
+	})
+}
+
 func (h *Base) AddFriend() faygo.HandlerFunc {
 	return faygo.HandlerFunc(func(ctx *faygo.Context) error {
 		friend_req := &models.FriendRequest{}

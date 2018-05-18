@@ -1,6 +1,8 @@
 package talk_it
 
 import (
+	"fmt"
+
 	"github.com/MobaiRuby/talk_it_api/cache"
 	"github.com/MobaiRuby/talk_it_api/models"
 )
@@ -18,6 +20,15 @@ func Friends(user_id int) (map[int]*models.Friend, error) {
 	return friends, nil
 }
 
+func Friend(id int) (*models.Friend, error) {
+	v, ok := cache.GetFriendsCache().Load(id)
+	if v != nil && ok {
+		return v.(*models.Friend), nil
+	}
+
+	return nil, fmt.Errorf("get friend info faild")
+}
+
 func Members(group_id int) (map[int]*models.Member, error) {
 	members := map[int]*models.Member{}
 
@@ -29,6 +40,15 @@ func Members(group_id int) (map[int]*models.Member, error) {
 	})
 
 	return members, nil
+}
+
+func Member(id int) (*models.Member, error) {
+	v, ok := cache.GetMemberCache().Load(id)
+	if v != nil && ok {
+		return v.(*models.Member), nil
+	}
+
+	return nil, fmt.Errorf("get member info faild")
 }
 
 func Groups(user_id int) (map[int]*models.Group, error) {
@@ -44,6 +64,15 @@ func Groups(user_id int) (map[int]*models.Group, error) {
 	return groups, nil
 }
 
+func Group(id int) (*models.Group, error) {
+	v, ok := cache.GetGroupCache().Load(id)
+	if v != nil && ok {
+		return v.(*models.Group), nil
+	}
+
+	return nil, fmt.Errorf("get group info faild")
+}
+
 func Technoshperes(user_id int) (map[int]*models.Technoshpere, error) {
 	technoshperes := map[int]*models.Technoshpere{}
 
@@ -55,4 +84,13 @@ func Technoshperes(user_id int) (map[int]*models.Technoshpere, error) {
 	})
 
 	return technoshperes, nil
+}
+
+func Technoshpere(id int) (*models.Technoshpere, error) {
+	v, ok := cache.GetTechnoshpereCache().Load(id)
+	if v != nil && ok {
+		return v.(*models.Technoshpere), nil
+	}
+
+	return nil, fmt.Errorf("get technoshpere info faild")
 }

@@ -36,6 +36,38 @@ func (h *Base) Groups() faygo.HandlerFunc {
 	})
 }
 
+func (h *Base) Group() faygo.HandlerFunc {
+	return faygo.HandlerFunc(func(ctx *faygo.Context) error {
+		cur_user_id, err := strconv.Atoi(ctx.Data(global.TALK_IT_HEADER_CURRENT_USER_ID).(string))
+		if cur_user_id == 0 || err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeUserIdError,
+				"msg":  "get current user failed",
+			})
+		}
+		g_id, err := pathId(ctx)
+		if err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeFriendError,
+				"msg":  err.Error(),
+			})
+		}
+
+		if group, err := talk_it.Group(g_id); err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeFriendError,
+				"msg":  err.Error(),
+			})
+		} else {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": 0,
+				"msg":  "",
+				"data": group,
+			})
+		}
+	})
+}
+
 func (h *Base) CreateGroup() faygo.HandlerFunc {
 	return faygo.HandlerFunc(func(ctx *faygo.Context) error {
 		cur_user_id, err := strconv.Atoi(ctx.Data(global.TALK_IT_HEADER_CURRENT_USER_ID).(string))

@@ -41,3 +41,10 @@ facebook:
     version: "v1.2"
     access_token: "access_token"
     me: "me"
+oss:
+  domain: "cos.ap-beijing.myqcloud.com"
+  app_id: "1256053751"
+  secret_id: "AKIDhUuEZyDjNtDLVXj4dAbqtlV5WlqZDXjj"
+  secret_key: "1ra7Tdji9eL2f7qcUEVrESYTVWM1Vntv"
+  bucket:
+    user: "talk-it-use"

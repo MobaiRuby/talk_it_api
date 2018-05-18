@@ -38,6 +38,39 @@ func (h *Base) Members() faygo.HandlerFunc {
 	})
 }
 
+func (h *Base) Member() faygo.HandlerFunc {
+	return faygo.HandlerFunc(func(ctx *faygo.Context) error {
+		cur_user_id, err := strconv.Atoi(ctx.Data(global.TALK_IT_HEADER_CURRENT_USER_ID).(string))
+		if cur_user_id == 0 || err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeUserIdError,
+				"msg":  "get current user failed",
+			})
+		}
+
+		member_id, err := pathId(ctx)
+		if err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeFriendError,
+				"msg":  err.Error(),
+			})
+		}
+
+		if member, err := talk_it.Member(member_id); err != nil {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": errorCodeFriendError,
+				"msg":  err.Error(),
+			})
+		} else {
+			return ctx.JSON(http.StatusOK, faygo.Map{
+				"code": 0,
+				"msg":  "",
+				"data": member,
+			})
+		}
+	})
+}
+
 func (h *Base) AddMember() faygo.HandlerFunc {
 	return faygo.HandlerFunc(func(ctx *faygo.Context) error {
 		cur_user_id, err := strconv.Atoi(ctx.Data(global.TALK_IT_HEADER_CURRENT_USER_ID).(string))

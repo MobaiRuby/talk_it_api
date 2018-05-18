@@ -2,6 +2,12 @@ package handler
 
 import (
 	"encoding/json"
+
+	"fmt"
+
+	"strconv"
+
+	"github.com/henrylee2cn/faygo"
 )
 
 const (
@@ -12,6 +18,7 @@ const (
 
 	errorCodeUserIdError
 	errorCodeFriendsError
+	errorCodeFriendError
 	errorCodeAddFriendError
 	errorCodeAcceptFriendError
 	errorCodeRemoveFriendError
@@ -24,6 +31,11 @@ const (
 	errorCodeMembersError
 	errorCodeMembersAddError
 	errorCodeMembersRemoveError
+
+	errorCodeTechnoshperesError
+	errorCodeTechnoshpereError
+	errorCodeTechnoshpereAddError
+	errorCodeTechnoshpereRemoveError
 )
 
 const (
@@ -31,6 +43,18 @@ const (
 	fbAuthToken = "fb_auth_token"
 )
 
+const (
+	pathIdKey string = ":id"
+)
+
 func ctxBindJson(bs interface{}, target interface{}) error {
 	return json.Unmarshal(bs.([]byte), target)
+}
+
+func pathId(ctx *faygo.Context) (int, error) {
+	path_id := ctx.PathParam(pathIdKey)
+	if path_id == "" {
+		return 0, fmt.Errorf("get path :id faild")
+	}
+	return strconv.Atoi(path_id)
 }
